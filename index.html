@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data to Google Sheets</title>
+</head>
+<body>
+
+<h1>Submit Your Data</h1>
+<form id="data-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById('data-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('https://script.google.com/macros/s/AKfycbyJ1YJ5S6dnMgjmQ_sLpYAp55BFnrpy9Z_ibOji0OuUzQo3yBx4B_Kcc8Wdyp7zJOz-/exec', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Success: ' + data.result);
+            document.getElementById('data-form').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error submitting data');
+        });
+    });
+</script>
+
+</body>
+</html>
