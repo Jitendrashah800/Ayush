@@ -20,28 +20,28 @@
 
 <script>
     document.getElementById('data-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+        e.preventDefault();  // Prevent the default form submission
         
         const formData = new FormData(this);
         const data = {};
         formData.forEach((value, key) => {
-            data[key] = value;
+            data[key] = value;  // Collect form data
         });
 
-        fetch('https://script.google.com/macros/s/AKfycbyJARnel5U2QumtPkykp1RLzjMPEzpouqWbAdqwspVZMYUBNp3aj7OU0qOCp-g_Uun0/exec', {
-            method: 'POST',
-            body: JSON.stringify(data),
+        fetch('https://script.google.com/macros/s/AKfycbwr_2FjcgN2m17w6NKN3zPzyPk_uvoXUBflJN-78iaTNrqqL2FAb9DEOPPI3gqLMi7P/exec', {
+            method: 'POST',  // Ensure this is POST
+            body: JSON.stringify(data),  // Convert data to JSON
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json'  // Set content type to JSON
             }
         })
         .then(response => response.json())
         .then(data => {
-            alert('Success: ' + data.result);
-            document.getElementById('data-form').reset();
+            alert('Success: ' + data.result);  // Handle success
+            document.getElementById('data-form').reset();  // Reset the form
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error:', error);  // Handle error
             alert('Error submitting data');
         });
     });
